@@ -1,4 +1,5 @@
-(ns plug-utils.time)
+(ns plug-utils.time
+  (:require [clojure.string :as str]))
 
 
 (defn time-now-local-str
