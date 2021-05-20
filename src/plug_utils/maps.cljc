@@ -53,7 +53,6 @@
 ;|-------------------------------------------------
 ;| Process/augment a map
 
-
 (defn merge-in
   "Pass map to function and merge its return value back into map"
   [m & fns]
@@ -157,6 +156,13 @@
          (map #(get % k))
          (max-value))))
 
+
+(defn as-lookup-by
+  "Create a lookup map from a collection of maps. Keyed by the given keyword 'kw'"
+  [kw xs]
+  {:pre  [(keyword? kw) (sequential? xs)]
+   :post [(map? %)]}
+  (into {} (map (juxt kw identity)) xs))
 
 ;|-------------------------------------------------
 ;| Work on multiple keys in a collection of maps

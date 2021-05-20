@@ -39,3 +39,12 @@
            (remove-keys-with-empty-strings {:a 1 :b "" :c nil :d [] :e [:x] :f '()}))
         "Leaves nil and empty non-strings")
     ))
+
+
+(deftest as-lookup-by-test
+  (testing "Basics"
+    (is (= {1 {:a 1 :b "foo"} 2 {:a 2 :b "bar"}}
+           (as-lookup-by :a [{:a 1 :b "foo"} {:a 2 :b "bar"}])))
+    (is (= {1 {:a 1 :b "bar"}}
+           (as-lookup-by :a [{:a 1 :b "foo"} {:a 1 :b "bar"}])) "Last wins when value is identical")
+    ))
