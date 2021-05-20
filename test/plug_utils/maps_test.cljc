@@ -31,6 +31,11 @@
   (testing "Basics"
     (is (= {:a 1 :b 2} (some-updates {:a 1} :b (constantly 2))) "Assigns value returned from fn if it's truthy")
     ;(is (= {:a 1 :b 1} (some-updates {:a 1} :b (constantly nil))) "Keeps existing if fn returns nil") ;;TODO: Should behaviour be changed to reflect test?
-    )
+    ))
 
-  )
+(deftest remove-keys-with-empty-strings-test
+  (testing "Basics"
+    (is (= {:a 1 :c nil :d [] :e [:x] :f '()}
+           (remove-keys-with-empty-strings {:a 1 :b "" :c nil :d [] :e [:x] :f '()}))
+        "Leaves nil and empty non-strings")
+    ))

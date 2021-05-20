@@ -121,12 +121,15 @@
 
 
 (defn remove-keys-with-empty-strings
-  "Remove keys that has an empty string as value"
+  "Remove keys with an empty string as value"
   [m]
+  {:pre  [(map? m)]
+   :post [(map? %)]}
   (into (empty m)
         (remove #(and (-> % second string?)
                       (-> % second empty?)))
         m))
+
 
 ;|-------------------------------------------------
 ;| Utility functions to use with "updates" function
