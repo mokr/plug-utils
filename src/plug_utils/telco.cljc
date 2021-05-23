@@ -105,5 +105,5 @@
   [#"\d{8,}"
    #"47\d{5,}"                                              ;; Five digits with 47 prefix
    #"47\d{3,}"
-   #"\D(0\d{4,4})"                                          ;; E.g.: ___:08246____ => 08246. Using capturing group
-   #"\d{7,7}"])                                             ;; When MSISDN is missing a digit. E.g. 9409822 instead of 94098282
+   #"\D(0\d{4,4})"                                          ;; Keep 5-digit short numbers as is
+   #"\d{7,7}"])                                             ;; When MSISDN is missing a digit.
