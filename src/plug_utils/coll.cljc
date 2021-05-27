@@ -19,3 +19,19 @@
   {:pre  [(sequential? xs)]
    :post [(string? %)]}
   (str/join ", " xs))
+
+
+(defn pick-by-mask
+  "Keep entries from first coll using second coll as a mask.
+  Optionally takes a pred that gets to decide what is considered truthy in mask"
+  ([xs mask]
+   {:pre [(sequential? xs) (sequential? mask)]}
+   (pick-by-mask xs mask identity))
+  ([xs mask pred]
+   {:pre [(sequential? xs) (sequential? mask) (fn? pred)]}
+   (->>
+     (map (fn [x mask-entry]
+            (when (pred mask-entry)
+              x))
+          xs mask)
+     (remove nil?))))

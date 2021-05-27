@@ -17,3 +17,13 @@
   (testing "Basics"
     (is (= "a, b" (comma-separated ["a" "b"])) "Should return string with comma and whitespace between elements")
     (is (= "a, b, c" (comma-separated '(\a \b \c))))))
+
+
+(deftest pick-by-mask-test
+  (testing "Arity two with default pred (keep truthy)"
+    (is (= [:b :d] (pick-by-mask [:a :b :c :d] [false 1 nil "foo"])) "Return entries that have a corresponding truthy val in mask")
+    (is (= [:b] (pick-by-mask [:a :b :c] [false 0 nil])) "Treats 0 (zero) as truthy")
+    (is (= [:b] (pick-by-mask [:a :b :c :d] [false 1 nil])) "Only treats as many entries as both colls have in common"))
+
+  (testing "Custom nil? pred"
+    (is (= [:a :c] (pick-by-mask [:a :b :c] [nil "foo" nil] nil?)) "Picks entries that have a nil value in mask")))
