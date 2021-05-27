@@ -2,7 +2,7 @@
   "Utils for working with phone numbers in Norway.
   Look to Google's libphonenumber for full featured tools"
   (:require [clojure.string :as str]
-            [plug-utils.preconditions :refer [valid?]]
+            [plug-utils.spec :refer [valid?]]
             [plug-utils.specs.telco :as spec]
             [clojure.spec.alpha :as s]))
 
