@@ -130,6 +130,27 @@
         m))
 
 
+;;Helper
+(defn- as-string [x]
+  (cond
+    (string? x) x
+    (keyword x) (name x)
+    :else (str x)))
+
+
+(defn namespace-all-keys
+  "Add given NS name to all keys.
+  Replacing any pre-existing ns for keys that are already namespaced"
+  [m ns-name]
+  {:pre  [(map? m)]
+   :post [(map? %)]}
+  (persistent!
+    (reduce-kv (fn [m k v]
+                 (assoc! m (keyword (as-string ns-name) (as-string k)) v))
+               (transient {})
+               m)))
+
+
 ;|-------------------------------------------------
 ;| Utility functions to use with "updates" function
 

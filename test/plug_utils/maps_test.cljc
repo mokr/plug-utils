@@ -48,3 +48,11 @@
     (is (= {1 {:a 1 :b "bar"}}
            (as-lookup-by :a [{:a 1 :b "foo"} {:a 1 :b "bar"}])) "Last wins when value is identical")
     ))
+
+(deftest namespace-all-keys-test
+  (testing "Basics"
+    (is (= {:foo/bar 1 :foo/baz 2} (namespace-all-keys {:bar 1 :baz 2} :foo)), "Keyword as ns")
+    (is (= {:foo/bar 1 :foo/baz 2} (namespace-all-keys {:bar 1 :baz 2} "foo")), "String as ns")
+    (is (= {:foo/bar 1 :foo/baz 2} (namespace-all-keys {:x/bar 1 :y/baz 2} :foo)), "Already namespaced")
+    )
+  )
