@@ -56,3 +56,16 @@
     (is (= {:foo/bar 1 :foo/baz 2} (namespace-all-keys {:x/bar 1 :y/baz 2} :foo)), "Already namespaced")
     )
   )
+
+(deftest tag-test
+  (testing "Basics"
+    (is (= {:tags #{:a :b}}
+           (tag {:tags #{:a}} :b)) "Add new tag to existing")
+    (is (= {:foo 1, :tagged #{:b}}
+           (tag {:foo 1} :b :key :tagged)) "Add new tag set under specified key")
+    (is (= {:tags #{:b}}
+           (tag {} :b)) "Tags empty map")
+    (is (= {:tags #{:b}}
+           (tag nil :b)) "Creates map and tags if map i nil")
+    )
+  )

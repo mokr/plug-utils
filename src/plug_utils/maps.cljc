@@ -49,6 +49,24 @@
    :post [(sequential? %) (every? map? %)]}
   (map (partial zipmap key-names) value-vectors))
 
+;|-------------------------------------------------
+;| Single key interaction
+
+
+(defn tag
+  "Add a new tag to a map's set of tags (default location :tags).
+  Optionally under specified key"
+  [m new-tag & {:keys [key]
+                :or   {key :tags}}]
+  (update m key #(into #{new-tag} %)))
+
+
+(comment
+  (add-tag {:tags #{:a}} :b)
+  (add-tag {:tags #{:a}} :b :key :tagged)
+  (add-tag {} :b)
+  (add-tag nil :b)
+  )
 
 ;|-------------------------------------------------
 ;| Process/augment a map
