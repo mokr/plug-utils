@@ -1,7 +1,7 @@
 (ns plug-utils.string)
 
 
-(defn uuid
+(defn gen-uuid
   "Generate a UUID"
   []
   #?(:clj  (.toString (java.util.UUID/randomUUID))
