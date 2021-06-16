@@ -16,7 +16,7 @@
 (defn comma-separated
   "Turn a collection into a comma separated string"
   [xs]
-  {:pre  [(sequential? xs)]
+  {:pre  [(or (seqable? xs) (nil? xs))]
    :post [(string? %)]}
   (str/join ", " xs))
 

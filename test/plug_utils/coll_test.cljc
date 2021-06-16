@@ -16,7 +16,12 @@
 (deftest comma-separated-test
   (testing "Basics"
     (is (= "a, b" (comma-separated ["a" "b"])) "Should return string with comma and whitespace between elements")
-    (is (= "a, b, c" (comma-separated '(\a \b \c))))))
+    (is (= "a, b, c" (comma-separated '(\a \b \c)))))
+  (testing "Handles other typical 'containers'"
+    (is (= "a, b" (comma-separated '("a" "b"))))
+    (is (= "a, b" (comma-separated "ab")))
+    (is (= "a, b" (comma-separated #{"a" "b"})))
+    (is (= "[\"a\" \"b\"], [\"c\" \"d\"]" (comma-separated {"a" "b" "c" "d"})))))
 
 
 (deftest pick-by-mask-test
