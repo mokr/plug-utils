@@ -148,6 +148,19 @@
         m))
 
 
+(defn transform-values
+  "Transform values in map according to map of transformations"
+  [m transforms]
+  {:pre  [(map? m) (map? transforms)]
+   :post [(map? %)]}
+  (reduce (fn [m' [k transform]]
+            (if (get m' k)
+              (update m' k transform)
+              m'))
+          m
+          transforms))
+
+
 ;;Helper
 (defn- as-string [x]
   (cond

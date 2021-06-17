@@ -1,6 +1,7 @@
 (ns plug-utils.maps-test
   (:require [clojure.test :refer [deftest is testing]]
-            [plug-utils.maps :refer :all]))
+            [plug-utils.maps :refer :all]
+            [clojure.string :as str]))
 
 
 (deftest different?-test
@@ -37,8 +38,7 @@
   (testing "Basics"
     (is (= {:a 1 :c nil :d [] :e [:x] :f '()}
            (remove-keys-with-empty-strings {:a 1 :b "" :c nil :d [] :e [:x] :f '()}))
-        "Leaves nil and empty non-strings")
-    ))
+        "Leaves nil and empty non-strings")))
 
 
 (deftest as-lookup-by-test
@@ -46,16 +46,15 @@
     (is (= {1 {:a 1 :b "foo"} 2 {:a 2 :b "bar"}}
            (as-lookup-by :a [{:a 1 :b "foo"} {:a 2 :b "bar"}])))
     (is (= {1 {:a 1 :b "bar"}}
-           (as-lookup-by :a [{:a 1 :b "foo"} {:a 1 :b "bar"}])) "Last wins when value is identical")
-    ))
+           (as-lookup-by :a [{:a 1 :b "foo"} {:a 1 :b "bar"}])) "Last wins when value is identical")))
+
 
 (deftest namespace-all-keys-test
   (testing "Basics"
     (is (= {:foo/bar 1 :foo/baz 2} (namespace-all-keys {:bar 1 :baz 2} :foo)), "Keyword as ns")
     (is (= {:foo/bar 1 :foo/baz 2} (namespace-all-keys {:bar 1 :baz 2} "foo")), "String as ns")
-    (is (= {:foo/bar 1 :foo/baz 2} (namespace-all-keys {:x/bar 1 :y/baz 2} :foo)), "Already namespaced")
-    )
-  )
+    (is (= {:foo/bar 1 :foo/baz 2} (namespace-all-keys {:x/bar 1 :y/baz 2} :foo)), "Already namespaced")))
+
 
 (deftest tag-test
   (testing "Basics"
@@ -66,6 +65,11 @@
     (is (= {:tags #{:b}}
            (tag {} :b)) "Tags empty map")
     (is (= {:tags #{:b}}
-           (tag nil :b)) "Creates map and tags if map i nil")
-    )
-  )
+           (tag nil :b)) "Creates map and tags if map i nil")))
+
+
+(deftest transform-values-test
+  (testing "Basics"
+    (is (= {:a "FOO" :b "bar" :c 1}
+           (transform-values {:a "foo" :b :bar :c 1} {:a str/upper-case :b name}))
+        "Transform keys according to transformers map, leaves others")))
