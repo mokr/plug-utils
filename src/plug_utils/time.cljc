@@ -15,26 +15,27 @@
 
 
 (defn inst->str
-  "Turn an inst into 'yyyy.MM.dd HH.mm.ss.SSS' string
-  or 'yyyy.MM.dd HH.mm.ss' if :with-millis? true is passed as opts
+  "Turn an inst into 'yyyy.MM.dd HH.mm.ss' string
+  or 'yyyy.MM.dd HH.mm.ss.SSS' if :with-millis? true is passed as opts
 
   opts:
   - :millis true  -- To get millis precision"
 
   [inst & {:keys [millis?]}]
-  #?(:clj  (-> (if millis? "yyyy.MM.dd HH.mm.ss.SSS" "yyyy.MM.dd HH.mm.ss") ;; Choose pattern
-               (java.text.SimpleDateFormat.)                ;; Create formatter
-               (.format inst))                              ;; Format inst with formatter
-     :cljs (-> inst
-               (.getTimezoneOffset)                         ;; Timezone (TZ) diff in minutes
-               (* 60000)                                    ;; Convert diff To millis
-               (->> (- (.getTime inst)))                    ;; Inst in epoch millis minus TZ offset
-               (js/Date.)                                   ;; Create new date object from the millis
-               (.toISOString)                               ;; Convert to ISO string
-               (.slice 0 -1)                                ;; Remove trailing "Z"
-               (cond-> (not millis?) (.slice 0 -4))         ;; Remove millis if not desired
-               (.replace "-" ".")                           ;; Have '.' separator in date part
-               (.replace "T" " "))))                        ;; Cleanup
+  (when inst
+    #?(:clj  (-> (if millis? "yyyy.MM.dd HH.mm.ss.SSS" "yyyy.MM.dd HH.mm.ss") ;; Choose pattern
+                 (java.text.SimpleDateFormat.)              ;; Create formatter
+                 (.format inst))                            ;; Format inst with formatter
+       :cljs (-> inst
+                 (.getTimezoneOffset)                       ;; Timezone (TZ) diff in minutes
+                 (* 60000)                                  ;; Convert diff To millis
+                 (->> (- (.getTime inst)))                  ;; Inst in epoch millis minus TZ offset
+                 (js/Date.)                                 ;; Create new date object from the millis
+                 (.toISOString)                             ;; Convert to ISO string
+                 (.slice 0 -1)                              ;; Remove trailing "Z"
+                 (cond-> (not millis?) (.slice 0 -4))       ;; Remove millis if not desired
+                 (.replace "-" ".")                         ;; Have '.' separator in date part
+                 (.replace "T" " ")))))                     ;; Cleanup
 
 
 ;|-------------------------------------------------
