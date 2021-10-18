@@ -4,13 +4,28 @@
 ;|-------------------------------------------------
 ;| FROM STRING
 
-(defn str->int [s]
-  #?(:clj  (some-> s (java.lang.Integer/parseInt))
-     :cljs (some-> s (js/parseInt))))
+(defn str->int
+  "Converts a string to int,
+  or returns unaltered if already a number"
+  [s]
+  #?(:clj  (cond
+             (number? s) s
+             :else (some-> s (java.lang.Integer/parseInt)))
+     :cljs (cond
+             (number? s) s
+             :else (some-> s (js/parseInt)))))
 
-(defn str->decimal [s]
-  #?(:clj  (some-> s (Double/parseDouble))                  ;; Double instead of Float to keep precision of longitude/latitude
-     :cljs (some-> s (js/parseFloat))))                     ;; JS Float keep precision for longitude/latitude
+
+(defn str->decimal
+  "Converts a string to decimal,
+  or returns unaltered if already a number"
+  [s]
+  #?(:clj  (cond
+             (number? s) s
+             :else (some-> s (Double/parseDouble)))         ;; Double instead of Float to keep precision of longitude/latitude
+     :cljs (cond
+             (number? s) s
+             :else (some-> s (js/parseFloat)))))            ;; JS Float keep precision for longitude/latitude
 
 
 ;|-------------------------------------------------
