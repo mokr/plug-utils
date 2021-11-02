@@ -34,7 +34,7 @@
                  (.toISOString)                             ;; Convert to ISO string
                  (.slice 0 -1)                              ;; Remove trailing "Z"
                  (cond-> (not millis?) (.slice 0 -4))       ;; Remove millis if not desired
-                 (.replace "-" ".")                         ;; Have '.' separator in date part
+                 (.replaceAll "-" ".")                      ;; Have '.' separator in date part
                  (.replace "T" " ")))))                     ;; Cleanup
 
 
