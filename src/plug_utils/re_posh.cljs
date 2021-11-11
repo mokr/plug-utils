@@ -73,7 +73,7 @@
   SINGLE signal/input version
   ---------------------------
   re-posh helper for using re-frame input signal for
-  'many' pull from Datascript with given pattern
+  pull-many from Datascript with given pattern
 
   USAGE:
   (re-posh/reg-sub
@@ -92,8 +92,8 @@
   "--------------------------
   MULTI signal/input version
   --------------------------
-  re-posh helper for using re-frame input signal for
-  pulling data from Datascript with given pattern using re-posh
+  re-posh helper for using multiple re-frame input signals for
+  pull-many Datascript with given pattern using re-posh
 
   USAGE:
   (re-posh/reg-sub
