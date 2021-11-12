@@ -5,5 +5,8 @@
 (deftest gen-uuid-test
   (let [a-uuid (gen-uuid)]
     (testing "Basics"
-      (is (string? a-uuid) "Should return a string")
-      (is (= a-uuid (re-find #"^\w+-\w+-\w+-\w+-\w+$" a-uuid)) "Has groups separated by dashes"))))
+      (is (uuid? a-uuid) "Should return a UUID"))
+    (testing "Format of UUID"
+      (is (= (str a-uuid)
+             (re-find #"^\w+-\w+-\w+-\w+-\w+$" (str a-uuid)))
+          "Has groups separated by dashes"))))
