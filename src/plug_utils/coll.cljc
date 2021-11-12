@@ -14,11 +14,21 @@
 
 
 (defn comma-separated
-  "Turn a collection into a comma separated string"
-  [xs]
-  {:pre  [(or (seqable? xs) (nil? xs))]
-   :post [(string? %)]}
-  (str/join ", " xs))
+  "Turn a collection into a comma separated string (optionally with a unit).
+
+  Arities:
+  [xs]        :: [1 2 3]      => \"1, 2, 3\"
+  [unit, xs]  :: \"km\" [1 2 3] => \"1km, 2km, 3km\""
+  ([xs]
+   {:pre  [(or (seqable? xs) (nil? xs))]
+    :post [(string? %)]}
+   (str/join ", " xs))
+  ([unit xs]
+   {:pre  [(string? unit) (or (seqable? xs) (nil? xs))]
+    :post [(string? %)]}
+   (->> xs
+        (map #(str % unit))
+        (str/join ", "))))
 
 
 (defn pick-by-mask
@@ -35,3 +45,11 @@
               x))
           xs mask)
      (remove nil?))))
+
+
+(comment
+  (comma-separated "km" [1 2 3])
+  (comma-separated 200 [1 2 3])
+  (comma-separated [1 2 3])
+
+  )

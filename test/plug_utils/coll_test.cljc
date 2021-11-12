@@ -21,7 +21,9 @@
     (is (= "a, b" (comma-separated '("a" "b"))))
     (is (= "a, b" (comma-separated "ab")))
     (is (= "a, b" (comma-separated #{"a" "b"})))
-    (is (= "[\"a\" \"b\"], [\"c\" \"d\"]" (comma-separated {"a" "b" "c" "d"})))))
+    (is (= "[\"a\" \"b\"], [\"c\" \"d\"]" (comma-separated {"a" "b" "c" "d"}))))
+  (testing "With unit"
+    (is (= "1m, 2m, 3m" (comma-separated "m" [1 2 3])))))
 
 
 (deftest pick-by-mask-test
