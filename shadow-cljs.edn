@@ -1,0 +1,18 @@
+;; shadow-cljs configuration
+{:nrepl {:port             7002
+         :init-ns          shadow.user                      ;plug-utils.time
+         :nrepl-middleware []}
+
+ :lein  {:profile "+cljs"}
+ :builds
+ {:app
+  {:target     :browser
+   :output-dir "target/cljsbuild/public/js"
+   :asset-path "/js"
+   :modules    {:app {:entries [plug-utils.coll]}}
+   :devtools   {}
+   :dev        {:closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}}
+   :release    {}}
+  :test {:target  :node-test, :output-to "target/test/test.js"
+         :autorun true}}
+ }
