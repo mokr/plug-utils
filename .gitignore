@@ -12,3 +12,6 @@ pom.xml.asc
 .hg/
 *.iml
 /.idea
+node_modules
+.shadow-cljs
+package-lock.json
