@@ -39,3 +39,10 @@
   (if (> a b)
     (- a b)
     (- b a)))
+
+(defn digit-sum
+  "Takes a number and sums its digits.
+  Examples: 15 => 6, 23 => 5, 7 => 7
+  https://en.wikipedia.org/wiki/Digit_sum"
+  [x]
+  (->> x (str) (map str->int) (apply +)))                   ;; NOTE: Running on all digits as the single digit ones won't be affected anyway.
