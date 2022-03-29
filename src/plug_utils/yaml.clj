@@ -38,6 +38,6 @@
    Example: \"my_key:\" (yaml) -> \":my-key\" (edn) "
   [file]
   (if-not (.exists (io/file file))
-    (log/warn (format "Unable to load YAML from %s (file does not exist). Did you forget to symlink?" file))
+    (log/error (format "Unable to load YAML from %s (file does not exist). Did you forget to symlink?" file))
     (do (log/info (format "Loading config from YAML file %s" file))
         (-> file slurp yaml/parse-string to-regular-map))))
