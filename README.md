@@ -23,6 +23,14 @@ Include in project.clj
 
 ```
 
+# TESTING
+
+```
+lein test-refresh
+```
+
+Assuming `com.jakemccrary/lein-test-refresh` plugin is included in ~/.lein/profiles.clj
+
 ## LICENSE
 
 Copyright © 2021 Morten Kristoffersen
