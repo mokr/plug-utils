@@ -19,14 +19,17 @@
 
 
 (defn gen-order-id
-  "Generate an order ID with memorable parts"
+  "Generate an order ID with memorable parts and minute grain timestamp.
+  Starts with timestamp for basic sorting
+  Returns e.g. \"20220520-0734-hip-bee\""
   []
   (let [animal    ["ant" "ape" "bat" "bee" "cat" "cow" "cub" "dog" "eel" "elk" "emu" "fly" "fox" "hen" "hog" "koi" "owl" "pig" "yak"]
         adjective ["any" "big" "bad" "coy" "dry" "fat" "fit" "fun" "fly" "hot" "hip" "lax" "old" "odd" "pro" "pet" "red" "sad" "shy" "tan" "wet"]
         timestamp (ut/time-now-local-str)
-        date      (-> timestamp (subs 5 10) (str/split #"-") reverse (->> (str/join "-")))
-        hhmm      (-> timestamp (subs 11 16) (str/replace ":" "-"))]
-    (str (rand-nth adjective) "-" (rand-nth animal) "-" date "-" hhmm)))
+        year      (-> timestamp (subs 0 4) (str/split #"-") reverse (->> (str/join "-")))
+        date      (-> timestamp (subs 5 10) (str/split #"-") (->> (str/join "")))
+        hhmm      (-> timestamp (subs 11 16) (str/replace ":" ""))]
+    (str year date "-" hhmm "-" (rand-nth adjective) "-" (rand-nth animal))))
 
 
-(def order-id-regex #"^\w\w\w-\w\w\w-\d\d-\d\d-\d\d-\d\d$") ;; E.g. "pet-owl-21/10-10:27" - For use in e.g. specs
+(def order-id-regex #"^\d\d\d\d\d\d\d\d-\d\d\d\d-\w\w\w-\w\w\w$") ;; E.g. "20220520-0734-hip-bee" - For use in e.g. specs
