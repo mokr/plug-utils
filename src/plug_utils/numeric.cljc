@@ -5,15 +5,15 @@
 ;| FROM STRING
 
 (defn str->int
-  "Converts a string to int,
+  "Converts a string/char to int,
   or returns unaltered if already a number"
   [s]
   #?(:clj  (cond
              (number? s) s
-             :else (some-> s (java.lang.Integer/parseInt)))
+             :else (some-> s (str) (java.lang.Integer/parseInt)))
      :cljs (cond
              (number? s) s
-             :else (some-> s (js/parseInt)))))
+             :else (some-> s (str) (js/parseInt)))))
 
 
 (defn str->decimal
