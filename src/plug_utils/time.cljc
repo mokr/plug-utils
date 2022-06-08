@@ -2,6 +2,15 @@
   (:require [clojure.string :as str]))
 
 
+;|-------------------------------------------------
+;| EPOC
+
+;;TODO: UTC vs Local time. What is returned in different situation? How does locale affect result?
+(defn epoch-millis-now
+  "Current time in epoch millis"
+  []
+  #?(:clj  (System/currentTimeMillis)
+     :cljs (.now js/Date)))
 
 
 ;|-------------------------------------------------
