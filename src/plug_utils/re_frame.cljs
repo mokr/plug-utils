@@ -4,6 +4,7 @@
             [clojure.spec.alpha :as s]
             [plug-utils.spec :refer [valid?]]
             [plug-utils.specs.re-frame :as $]
+            [re-frame.core :as rf]
             [taoensso.timbre :as log]))
 
 ;;MAYBE: Common init event. Utilize e.g. :js-vars cofx below to get JS vars into DB.
@@ -12,21 +13,21 @@
 ;|-------------------------------------------------
 ;| SUGAR
 
-(def <sub (comp deref re-frame.core/subscribe))
-(def >evt re-frame.core/dispatch)
+(def <sub (comp deref rf/subscribe))
+(def >evt rf/dispatch)
 
 
 ;|-------------------------------------------------
 ;| EVENTS
 
 ;; Note: plug-fetch dispatches this with keys [:source :action :message :raw]
-(re-frame.core/reg-event-fx
+(rf/reg-event-fx
   :reg/error
-  [re-frame.core/trim-v]
+  [rf/trim-v]
   (fn [{:keys [db]} [{:keys [source action message raw] :as error}]]
     {:pre  [(valid? ::$/error-map error)]
      :post [(map? %)]}
-    (log/debug "error" error)
+    ;(log/debug "error" error)
     (let [{:keys [last-error status-text debug-message]} raw
           message           (or message last-error status-text debug-message)
           ;notification-text    (str action " => " message)
@@ -43,7 +44,7 @@
 ;|-------------------------------------------------
 ;| COFX / COEFFECTS
 
-(re-frame.core/reg-cofx
+(rf/reg-cofx
   :js-vars
   (fn [coeffects]
     (assoc coeffects :js-vars {:user/identity js/identity
@@ -54,13 +55,13 @@
 ;| FX / EFFECTS
 
 ;; Example chain of events: plug-fetch fails du to 403 => redirect to /login provided by plug-sso
-(re-frame.core/reg-fx
+(rf/reg-fx
   :redirect-to
   (fn [url]
     (http/client-redirect url)))
 
 
-(re-frame.core/reg-fx
+(rf/reg-fx
   :log
   (fn [{:keys [severity text]}]
     (case severity
