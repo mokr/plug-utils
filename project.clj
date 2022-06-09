@@ -5,7 +5,7 @@
             :url  "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[clj-commons/clj-yaml "0.7.108"]
                  [org.clojure/clojure "1.11.1" :scope "provided"]
-                 [org.clojure/clojurescript "1.11.51" :scope "provided"]
+                 [org.clojure/clojurescript "1.11.55" :scope "provided"]
                  [org.clojure/core.async "1.5.648" :scope "provided"]
                  [com.taoensso/timbre "5.2.1"]]
   :repl-options {:init-ns plug-utils.re-frame}
@@ -15,4 +15,4 @@
    {:source-paths ["src" "test"]
     :dependencies [[re-frame "1.2.0" :scope "provided"]
                    [reagent "1.1.1" :scope "provided"]
-                   [thheller/shadow-cljs "2.19.0" :scope "provided"]]}})
+                   [thheller/shadow-cljs "2.19.2" :scope "provided"]]}})
