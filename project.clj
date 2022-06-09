@@ -5,7 +5,7 @@
             :url  "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[clj-commons/clj-yaml "0.7.108"]
                  [org.clojure/clojure "1.11.1" :scope "provided"]
-                 [org.clojure/clojurescript "1.11.55" :scope "provided"]
+                 [org.clojure/clojurescript "1.11.54" :scope "provided"]
                  [org.clojure/core.async "1.5.648" :scope "provided"]
                  [com.taoensso/timbre "5.2.1"]]
   :repl-options {:init-ns plug-utils.re-frame}
