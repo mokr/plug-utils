@@ -3,6 +3,17 @@
   (:require [clojure.string :as str]))
 
 
+(defn as-sequential-unless-nil
+  "Ensure that e.g. plain strings or numbers are wrapped in a vector.
+  Typical use-case is to ensure we provide a collection to a function expecting one
+  and not a plain string/number.
+  Except: nil arg should return nil"
+  [arg]
+  (cond
+    (nil? arg) nil
+    (not (sequential? arg)) (vector arg)
+    :else arg))
+
 
 (defn nil-if-empty
   "Turn empty collection into nil.

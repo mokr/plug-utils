@@ -3,6 +3,15 @@
             [plug-utils.coll :refer :all]))
 
 
+(deftest as-sequential-test
+  (testing "Basics"
+    (is (= ["foo"] (as-sequential-unless-nil "foo")))
+    (is (= ["foo"] (as-sequential-unless-nil ["foo"])))
+    (is (= [{:foo "bar"}] (as-sequential-unless-nil {:foo "bar"})))
+    (is (= '("foo") (as-sequential-unless-nil (list "foo"))))
+    (is (= nil (as-sequential-unless-nil nil)))
+    ))
+
 (deftest nil-if-empty-test
   (testing "Empty returns nil"
     (is (nil? (nil-if-empty [])) "Empty vector should return nil")
