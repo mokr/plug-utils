@@ -13,6 +13,13 @@
      :cljs (.now js/Date)))
 
 
+(defn epoch-millis->inst
+  "Convert from epoch with millis to inst"
+  [^Long epoch-millis]
+  #?(:clj  (java.util.Date. epoch-millis)
+     :cljs (js/Date. epoch-millis)))
+
+
 ;|-------------------------------------------------
 ;| INSTANTS
 
