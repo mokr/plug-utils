@@ -137,6 +137,17 @@
       (map m ks))))
 
 
+(defn remove-keys-with-nil-val
+  "Remove keys with nil value.
+  Note: Does not touch keys with false or empty string values"
+  [m]
+  {:pre  [(map? m)]
+   :post [(map? %)]}
+  (into (empty m)
+        (remove (comp nil? second))
+        m))
+
+
 (defn remove-keys-with-empty-strings
   "Remove keys with an empty string as value"
   [m]
