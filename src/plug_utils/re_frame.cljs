@@ -44,11 +44,12 @@
 ;|-------------------------------------------------
 ;| COFX / COEFFECTS
 
-(rf/reg-cofx
-  :js-vars
-  (fn [coeffects]
-    (assoc coeffects :js-vars {:user/identity js/identity
-                               :user/role     js/role})))
+;; Creates conflicts and expectation of having given js vars available. Better to implement in each project
+;(rf/reg-cofx
+;  :js-vars
+;  (fn [coeffects]
+;    (assoc coeffects :js-vars {:user/identity js/identity
+;                               :user/role     js/role})))
 
 
 ;|-------------------------------------------------
