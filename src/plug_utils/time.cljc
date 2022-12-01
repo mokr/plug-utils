@@ -31,17 +31,24 @@
 
 
 (defn inst->str
-  "Turn an inst into 'yyyy.MM.dd HH.mm.ss' string
-  or 'yyyy.MM.dd HH.mm.ss.SSS' if :with-millis? true is passed as opts
+  "Turn an inst into 'yyyy.MM.dd HH:mm:ss' string
+  or 'yyyy.MM.dd HH:mm:ss.SSS' if :with-millis? true is passed as opts
 
   opts:
-  - :millis true  -- To get millis precision"
-
-  [inst & {:keys [millis?]}]
+  - :millis true  -- To get millis precision
+  - :timezone     -- (Java only) \"CET\", \"UTC\", \"GMT\", ... "
+  [inst & {:keys [millis? timezone]}]
   (when inst
-    #?(:clj  (-> (if millis? "yyyy.MM.dd HH.mm.ss.SSS" "yyyy.MM.dd HH.mm.ss") ;; Choose pattern
-                 (java.text.SimpleDateFormat.)              ;; Create formatter
-                 (.format inst))                            ;; Format inst with formatter
+    #?(:clj (let [pattern     (if millis? "yyyy.MM.dd HH:mm:ss.SSS" "yyyy.MM.dd HH:mm:ss") ;; Choose pattern
+                  *formatted* (new java.text.SimpleDateFormat pattern)] ;; Creat formatter
+
+              (when timezone                                ;; Which timezone to display the time for (inst is just millis since "epoch" without time zone info)
+                (.setTimeZone *formatted* (java.util.TimeZone/getTimeZone timezone)))
+
+              (.format *formatted* inst))                   ;; Format inst with formatter
+       (-> (if millis? "yyyy.MM.dd HH.mm.ss.SSS" "yyyy.MM.dd HH.mm.ss") ;; Choose pattern
+           (java.text.SimpleDateFormat.)                    ;; Create formatter
+           (.format inst))                                  ;; Format inst with formatter
        :cljs (-> inst
                  (.getTimezoneOffset)                       ;; Timezone (TZ) diff in minutes
                  (* 60000)                                  ;; Convert diff To millis
