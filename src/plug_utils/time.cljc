@@ -100,7 +100,7 @@
 ;|-------------------------------------------------
 ;| CONVERSIONS
 
-(defn hours->milliseconds [hours]
+(defn hours->millis [hours]
   (* hours 3600000))
 
 
