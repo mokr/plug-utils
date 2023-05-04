@@ -100,8 +100,12 @@
 ;|-------------------------------------------------
 ;| CONVERSIONS
 
-(defn hours->milliseconds [n]
-  (* n 3.6e6))
+(defn hours->milliseconds [hours]
+  (* hours 3600000))
+
+
+(defn minutes->millis [minutes]
+  (* minutes 60000))
 
 
 ;|-------------------------------------------------
